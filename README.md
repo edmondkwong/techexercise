@@ -7,10 +7,6 @@ the exercise has been deployed to:
 [http://techexercise.cloudhub.io/console/]
 
 
-the whole project has been commited to github
-
-
-
 ### What I have done
 basically just follow the tutorials and documentation on mulesoft
 
