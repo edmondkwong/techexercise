@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+  	  "id": {
+  	  "description": "address id",
+  	  "type": "number"
+  	  },
+    "addressLine": {
+      "type": "string",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 36
+    },
+    "addressType": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

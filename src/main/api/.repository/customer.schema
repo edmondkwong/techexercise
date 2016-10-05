@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "customer identifier",
+      "type": "number"
+    },
+    "firstName": {
+      "type": "string",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "lastName": {
+      "type": "string",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 255
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "order identifier",
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 36
+    }
+  }
+}

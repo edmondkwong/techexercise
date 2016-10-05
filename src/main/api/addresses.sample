@@ -1,0 +1,12 @@
+[
+  {
+    "addressLine": "101 test st",
+    "type": "postal",
+    "id": 101
+  },
+  {
+    "addressLine": "102 test st",
+    "type": "residential",
+    "id": 102
+  }
+]

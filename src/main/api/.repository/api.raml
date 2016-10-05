@@ -1,0 +1,157 @@
+#%RAML 0.8
+title: tech exercise
+version: v1
+baseUri: https://mocksvc.mulesoft.com/mocks/4dff1b06-f12f-4291-b712-d4cc6f3b9e0b/api
+mediaType: application/json
+
+schemas:
+  - customer: !include customer.schema
+  - address: !include address.schema
+  - order: !include order.schema
+documentation:
+  - title: Introduction
+    content: |
+      API to handle CRUD operations of customers
+resourceTypes:
+  - collection:
+      description: Collection of available <<resourcePathName>>
+      get:
+        description: Get a list of <<resourcePathName>>.
+        responses:
+          200:
+            body:
+              application/json:
+                example:
+                  <<exampleCollection>>
+      post:
+        description: | 
+          Add a new <<resourcePathName|!singularize>>.
+        queryParameters:
+          access_token:
+            description: "The access token provided by the authentication application"
+            example: AABBCCDD
+            required: true
+            type: string
+        body:
+          application/json:
+            schema: <<resourcePathName|!singularize>>
+            example: |
+              <<exampleItem>>
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  { "message": "The <<resourcePathName|!singularize>> has been properly entered" }
+  - collection-item:
+      description: Entity representing a <<resourcePathName|!singularize>>
+      get:
+        description: |
+          Get the <<resourcePathName|!singularize>>
+          with <<resourcePathName|!singularize>>Id =
+          {<<resourcePathName|!singularize>>Id}
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  <<exampleItem>>
+          404:
+            body:
+              application/json:
+                example: |
+                  {"message": "<<resourcePathName|!singularize>> not found" }
+                  
+traits:
+  - searchable:
+      queryParameters:
+        query:
+          description: |
+            JSON array [{"field1","value1","operator1"},{"field2","value2","operator2"},...,{"fieldN","valueN","operatorN"}] <<description>>
+          example: |
+            <<example>>
+  - orderable:
+      queryParameters:
+        orderBy:
+          description: |
+            Order by field: <<fieldsList>>
+          type: string
+          required: false
+        order:
+          description: Order
+          enum: [desc, asc]
+          default: desc
+          required: false
+  - pageable:
+      queryParameters:
+        offset:
+          description: Skip over a number of elements by specifying an offset value for the query
+          type: integer
+          required: false
+          example: 20
+          default: 0
+        limit:
+          description: Limit the number of elements on the response
+          type: integer
+          required: false
+          example: 80
+          default: 10
+/customers:
+  type:
+    collection:
+      exampleCollection: !include customers.sample
+      exampleItem: !include customer.sample
+  get:
+    is: [
+          searchable: {description: "with valid searchable fields: firstName", example: "[\"firstName\"]"},
+          orderable: {fieldsList: "firstName"},
+          pageable
+        ]        
+  post:
+    responses:
+      201:
+        description: "create a new customer"
+        body:
+          example: <<exampleItem>>
+  /{customerId}:
+    type:
+      collection-item:
+        exampleItem: !include customer.sample
+    put:
+      responses:
+        200:
+          body:
+            example: <<exampleItem>>
+        400:
+          body:
+            example: |
+              {
+                "message": "update failed",
+                "error": "12345"
+              }
+    delete:
+      responses:
+        200:
+          body:
+            example: |
+              {}
+    /addresses:
+      type:
+        collection:
+          exampleCollection: !include addresses.sample
+          exampleItem: !include address.sample
+      get:
+        responses:
+          200:
+            description: "get the addresses for a customer"        
+    /orders:
+      type:
+        collection:
+          exampleCollection: !include orders.sample
+          exampleItem: !include order.sample
+      get:
+        responses:
+          200:
+            description: "get the order of a customer"
+          
+        

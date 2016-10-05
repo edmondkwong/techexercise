@@ -1,0 +1,12 @@
+[
+  {
+    "firstName": "second",
+    "lastName": "customer",
+    "id": 2
+  },
+  {
+    "firstName": "first",
+    "lastName": "customer",
+    "id": 1
+  }
+]
