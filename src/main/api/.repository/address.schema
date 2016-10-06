@@ -3,10 +3,10 @@
   "id": "http://jsonschema.net",
   "type": "object",
   "properties": {
-  	  "id": {
+  	"id": {
   	  "description": "address id",
   	  "type": "number"
-  	  },
+    },
     "addressLine": {
       "type": "string",
       "required": true,

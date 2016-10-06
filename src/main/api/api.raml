@@ -115,10 +115,15 @@ traits:
       collection-item:
         exampleItem: !include customer.sample
     put:
+      body:
+        application/json:
+          schema: customer
+          example: <<exampleItem>>
       responses:
         200:
           body:
             application/json:
+              
               example: |
                 {"message": "customer updated"}           
         400:

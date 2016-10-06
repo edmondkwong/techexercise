@@ -35,8 +35,7 @@ resourceTypes:
         body:
           application/json:
             schema: <<resourcePathName|!singularize>>
-            example: |
-              <<exampleItem>>
+            example: <<exampleItem>>
         responses:
           200:
             body:
@@ -54,14 +53,12 @@ resourceTypes:
           200:
             body:
               application/json:
-                example: |
-                  <<exampleItem>>
+                example: <<exampleItem>>
           404:
             body:
               application/json:
                 example: |
-                  {"message": "<<resourcePathName|!singularize>> not found" }
-                  
+                  {"message": "<<resourcePathName|!singularize>> not found" }                     
 traits:
   - searchable:
       queryParameters:
@@ -118,23 +115,31 @@ traits:
       collection-item:
         exampleItem: !include customer.sample
     put:
+      body:
+        application/json:
+          schema: customer
+          example: <<exampleItem>>
       responses:
         200:
           body:
-            example: <<exampleItem>>
+            application/json:
+              
+              example: |
+                {"message": "customer updated"}           
         400:
           body:
-            example: |
-              {
-                "message": "update failed",
-                "error": "12345"
-              }
+            application/json:
+              example: |
+                {
+                  "message": "update failed",
+                  "error": "12345"
+                }
     delete:
       responses:
         200:
           body:
             example: |
-              {}
+              {"message": "customer deleted"}
     /addresses:
       type:
         collection:

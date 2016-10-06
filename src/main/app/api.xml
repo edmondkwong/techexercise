@@ -4,9 +4,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
     <http:listener-config name="api-httpListenerConfig" host="0.0.0.0" port="${http.port}" doc:name="HTTP Listener Configuration"/>
-    <apikit:config name="api-config" raml="api.raml" consoleEnabled="false" doc:name="Router">
-    	<!-- <apikit:flow-mapping action="get" flow-ref="get:/customers:api-config" resource="/customers"/> -->
-    </apikit:config>
+    <apikit:config name="api-config" raml="api.raml" consoleEnabled="false" doc:name="Router"/>
     <flow name="api-main">
         <http:listener config-ref="api-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
         <apikit:router config-ref="api-config" doc:name="APIkit Router"/>
@@ -17,10 +15,10 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <apikit:console config-ref="api-config" doc:name="APIkit Console"/>
     </flow>
     <flow name="put:/customers/{customerId}:api-config">
-        <set-payload value="&lt;&lt;exampleItem&gt;&gt;" doc:name="Set Payload"/>
+        <set-payload value="{&quot;message&quot;: &quot;customer updated&quot;}" doc:name="Set Payload"/>
     </flow>
     <flow name="delete:/customers/{customerId}:api-config">
-        <set-payload value="{}" doc:name="Set Payload"/>
+        <set-payload value="{&quot;message&quot;: &quot;customer deleted&quot;}" doc:name="Set Payload"/>
     </flow>
     <flow name="get:/customers:api-config">
         <set-payload value="[&#xA;  {&#xA;    &quot;firstName&quot;: &quot;second&quot;,&#xA;    &quot;lastName&quot;: &quot;customer&quot;,&#xA;    &quot;id&quot;: 2&#xA;  },&#xA;  {&#xA;    &quot;firstName&quot;: &quot;first&quot;,&#xA;    &quot;lastName&quot;: &quot;customer&quot;,&#xA;    &quot;id&quot;: 1&#xA;  }&#xA;]" doc:name="Set Payload"/>
@@ -29,7 +27,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <set-payload value="{&#xA;  &quot;firstName&quot; : &quot;second&quot;,&#xA;  &quot;lastName&quot; : &quot;customer&quot;,&#xA;  &quot;id&quot;: 2&#xA;}" doc:name="Set Payload"/>
     </flow>
     <flow name="get:/customers/{customerId}/addresses:api-config">
-        <set-payload value="[&#xA;  {&#xA;    &quot;addressLine&quot;: &quot;101 test st&quot;,&#xA;    &quot;type&quot;: &quot;postal&quot;&#xA;  },&#xA;  {&#xA;    &quot;addressLine&quot;: &quot;102 test st&quot;,&#xA;    &quot;type&quot;: &quot;residential&quot;&#xA;  }&#xA;]" doc:name="Set Payload"/>
+        <set-payload value="[&#xA;  {&#xA;    &quot;addressLine&quot;: &quot;101 test st&quot;,&#xA;    &quot;type&quot;: &quot;postal&quot;,&#xA;    &quot;id&quot;: 101&#xA;  },&#xA;  {&#xA;    &quot;addressLine&quot;: &quot;102 test st&quot;,&#xA;    &quot;type&quot;: &quot;residential&quot;,&#xA;    &quot;id&quot;: 102&#xA;  }&#xA;]" doc:name="Set Payload"/>
     </flow>
     <flow name="get:/customers/{customerId}/orders:api-config">
         <set-payload value="[{&#xA;&quot;id&quot;: 10001,&#xA;&quot;amount&quot;: 12.34,&#xA;&quot;status&quot;: &quot;delivered&quot;&#xA;},{&#xA;&quot;id&quot;: 10002,&#xA;&quot;amount&quot;: 10.05,&#xA;&quot;status&quot;: &quot;paid&quot;&#xA;}]" doc:name="Set Payload"/>
@@ -71,6 +69,4 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
             <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
         </apikit:mapping>
     </apikit:mapping-exception-strategy>
-    
-   
 </mule>

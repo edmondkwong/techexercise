@@ -1,4 +1,5 @@
 {
     "addressLine": "101 test st",
-    "type": "postal"
+    "type": "postal",
+    "id": 101
   }

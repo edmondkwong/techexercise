@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <munit:config name="munit" doc:name="MUnit configuration" mock-connectors="false" mock-inbounds="false"/>
+    <spring:beans>
+        <spring:import resource="classpath:api.xml"/>
+    </spring:beans>
+   	<http:request-config name="HTTP_Request_Configuration"
+		host="localhost" port="${http.port}" basePath="api" doc:name="HTTP Request Configuration">
+	</http:request-config>
+    <munit:test name="new-test-suite-put:/customers/{customerId}:api-configTest" description="Test">
+        <flow-ref name="put:/customers/{customerId}:api-config" doc:name="Flow-ref to put:/customers/{customerId}:api-config"/>
+        <munit:assert-on-equals message="oops!" expectedValue="{&quot;message&quot;: &quot;customer updated&quot;}" actualValue="#[payload]"/>
+    </munit:test>
+    <munit:test name="new-test-suite-delete:/customers/{customerId}:api-configTest" description="Test">
+        <flow-ref name="delete:/customers/{customerId}:api-config" doc:name="Flow-ref to delete:/customers/{customerId}:api-config"/>
+    </munit:test>
+    <munit:test name="new-test-suite-get:/customers:api-configTest" description="Test">
+        <flow-ref name="get:/customers:api-config" doc:name="Flow-ref to get:/customers:api-config"/>
+        <object-to-string-transformer doc:name="Object to String" />     
+		<munit:assert-not-null message="The response payload is not correct!"
+			doc:name="Assert Payload" />
+    </munit:test>
+    <munit:test name="new-test-suite-get:/customers/{customerId}:api-configTest" description="Test">
+        <flow-ref name="get:/customers/{customerId}:api-config" doc:name="Flow-ref to get:/customers/{customerId}:api-config"/>
+    </munit:test>
+    <munit:test name="new-test-suite-get:/customers/{customerId}/addresses:api-configTest" description="Test">
+        <flow-ref name="get:/customers/{customerId}/addresses:api-config" doc:name="Flow-ref to get:/customers/{customerId}/addresses:api-config"/>
+    </munit:test>
+    <munit:test name="new-test-suite-get:/customers/{customerId}/orders:api-configTest" description="Test">
+        <flow-ref name="get:/customers/{customerId}/orders:api-config" doc:name="Flow-ref to get:/customers/{customerId}/orders:api-config"/>
+    </munit:test>
+    <munit:test name="new-test-suite-post:/customers:application/json:api-configTest" description="Test">
+        <flow-ref name="post:/customers:application/json:api-config" doc:name="Flow-ref to post:/customers:application/json:api-config"/>
+        <munit:assert-on-equals message="oops!" expectedValue="{ &quot;message&quot;: &quot;The customer has been properly entered&quot; }" actualValue="#[payload]"/>
+        <!-- <munit:assert-on-equals message="The HTTP Status code is not correct!" expectedValue="#[201]" actualValue="#[message.inboundProperties['http.status']]" doc:name="Assert Equals"/> --> 
+    </munit:test>
+    <munit:test name="new-test-suite-post:/customers/{customerId}/addresses:application/json:api-configTest" description="Test">
+        <flow-ref name="post:/customers/{customerId}/addresses:application/json:api-config" doc:name="post:/customers/{customerId}/addresses:application/json:api-config"/>
+    </munit:test>
+    <munit:test name="new-test-suite-post:/customers/{customerId}/orders:application/json:api-configTest" description="Test">
+        <flow-ref name="post:/customers/{customerId}/orders:application/json:api-config" doc:name="Flow-ref to post:/customers/{customerId}/orders:application/json:api-config"/>
+    </munit:test>
+</mule>
