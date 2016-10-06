@@ -8,6 +8,7 @@
 *.so
 target
 .mule
+.settings
 
 # Packages #
 ############
