@@ -25,7 +25,7 @@ basically just follow the tutorials and documentation on mulesoft
 * Another way is to use Authorization header but it's probably less secure
 
 **Use case 3**: 
-Have added orders as endpoint per customer id, can probably add products per customer or have another sets of endpoints for product operations
+* Have added orders as endpoint per customer id, can probably add products per customer or have another sets of endpoints for product operations
 
 ### Interesting ideas
 * have tried to use the Mulesoft recommended way to develop the code 
